@@ -22,6 +22,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+
+		<springfox-swagger2.version>2.2.2</springfox-swagger2.version>
 	</properties>
 
 	<dependencies>
@@ -45,6 +47,12 @@
 
 		<!-- 常用包 -->
 		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.29</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.5</version>
@@ -59,6 +67,25 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
 		</dependency>
+
+		<!-- swagger2 start -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox-swagger2.version}</version>
+		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>io.springfox</groupId>-->
+			<!--<artifactId>springfox-swagger-ui</artifactId>-->
+			<!--<version>${springfox-swagger2.version}</version>-->
+		<!--</dependency>-->
+		<!-- 使用第三方swagger2 UI -->
+		<dependency>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>swagger-bootstrap-ui</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<!-- swagger2 end -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
