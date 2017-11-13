@@ -26,15 +26,15 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from jeiker.mall_order
+    from mmall_order
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from jeiker.mall_order
+    delete from mmall_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jeiker.mall.model.Order" >
-    insert into jeiker.mall_order (id, order_no, user_id, 
+    insert into mmall_order (id, order_no, user_id,
       shipping_id, payment, payment_type, 
       postage, status, payment_time, 
       send_time, end_time, close_time, 
@@ -46,7 +46,7 @@
       now(), now())
   </insert>
   <insert id="insertSelective" parameterType="com.jeiker.mall.model.Order" >
-    insert into jeiker.mall_order
+    insert into mmall_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -137,7 +137,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jeiker.mall.model.Order" >
-    update jeiker.mall_order
+    update mmall_order
     <set >
       <if test="orderNo != null" >
         order_no = #{orderNo,jdbcType=BIGINT},
@@ -182,7 +182,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jeiker.mall.model.Order" >
-    update jeiker.mall_order
+    update mmall_order
     set order_no = #{orderNo,jdbcType=BIGINT},
       user_id = #{userId,jdbcType=INTEGER},
       shipping_id = #{shippingId,jdbcType=INTEGER},
@@ -203,7 +203,7 @@
   <select id="selectByUserIdAndOrderNo" resultMap="BaseResultMap" parameterType="map">
     SELECT
     <include refid="Base_Column_List"></include>
-    from jeiker.mall_order
+    from mmall_order
     where order_no = #{orderNo}
     and user_id = #{userId}
   </select>
@@ -213,7 +213,7 @@
     SELECT
     <include refid="Base_Column_List">
     </include>
-    FROM  jeiker.mall_order
+    FROM  mmall_order
     where order_no = #{orderNo}
   </select>
 
@@ -222,7 +222,7 @@
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="int">
     SELECT
       <include refid="Base_Column_List"/>
-    from jeiker.mall_order
+    from mmall_order
     where user_id = #{userId}
     order by create_time desc
   </select>
@@ -232,7 +232,7 @@
   <select id="selectAllOrder" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    from jeiker.mall_order
+    from mmall_order
     ORDER BY  create_time desc
   </select>
 

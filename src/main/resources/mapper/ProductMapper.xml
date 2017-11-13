@@ -24,15 +24,15 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from jeiker.mall_product
+    from mmall_product
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from jeiker.mall_product
+    delete from mmall_product
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jeiker.mall.model.Product" >
-    insert into jeiker.mall_product (id, category_id, name, 
+    insert into mmall_product (id, category_id, name,
       subtitle, main_image, sub_images, 
       detail, price, stock, 
       status, create_time, update_time
@@ -44,7 +44,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jeiker.mall.model.Product" >
-    insert into jeiker.mall_product
+    insert into mmall_product
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -123,7 +123,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jeiker.mall.model.Product" >
-    update jeiker.mall_product
+    update mmall_product
     <set >
       <if test="categoryId != null" >
         category_id = #{categoryId,jdbcType=INTEGER},
@@ -162,7 +162,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jeiker.mall.model.Product" >
-    update jeiker.mall_product
+    update mmall_product
     set category_id = #{categoryId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       subtitle = #{subtitle,jdbcType=VARCHAR},
@@ -181,7 +181,7 @@
   <select id="selectList" resultMap="BaseResultMap" >
     SELECT
     <include refid="Base_Column_List"/>
-    from jeiker.mall_product
+    from mmall_product
     ORDER BY id asc
   </select>
 
@@ -189,7 +189,7 @@
   <select id="selectByNameAndProductId" resultMap="BaseResultMap" parameterType="map">
     SELECT
     <include refid="Base_Column_List"/>
-    from jeiker.mall_product
+    from mmall_product
     <where>
       <if test="productName != null">
         and name like #{productName}
@@ -203,7 +203,7 @@
   <select id="selectByNameAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
     SELECT
     <include refid="Base_Column_List"></include>
-    from jeiker.mall_product
+    from mmall_product
     where status = 1
     <if test="productName != null">
       and name like #{productName}

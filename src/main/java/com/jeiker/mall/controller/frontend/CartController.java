@@ -35,11 +35,12 @@ public class CartController {
     @PostMapping("list")
     @ResponseBody
     public ServerResponse<CartVo> list(HttpSession session) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
-        }
-        return iCartService.list(user.getId());
+//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+//        if (user == null) {
+//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+//        }
+//        return iCartService.list(user.getId());
+        return iCartService.list(1);
     }
 
     @ApiOperation("增加类别")

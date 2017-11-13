@@ -24,15 +24,15 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from jeiker.mall_shipping
+    from mmall_shipping
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from jeiker.mall_shipping
+    delete from mmall_shipping
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jeiker.mall.model.Shipping" useGeneratedKeys="true" keyProperty="id">
-    insert into jeiker.mall_shipping (id, user_id, receiver_name, 
+    insert into mmall_shipping (id, user_id, receiver_name,
       receiver_phone, receiver_mobile, receiver_province, 
       receiver_city, receiver_district, receiver_address, 
       receiver_zip, create_time, update_time
@@ -44,7 +44,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jeiker.mall.model.Shipping" >
-    insert into jeiker.mall_shipping
+    insert into mmall_shipping
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -123,7 +123,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jeiker.mall.model.Shipping" >
-    update jeiker.mall_shipping
+    update mmall_shipping
     <set >
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
@@ -162,7 +162,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jeiker.mall.model.Shipping" >
-    update jeiker.mall_shipping
+    update mmall_shipping
     set user_id = #{userId,jdbcType=INTEGER},
       receiver_name = #{receiverName,jdbcType=VARCHAR},
       receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
@@ -178,13 +178,13 @@
   </update>
 
   <delete id="deleteByShippingIdUserId" parameterType="map">
-    DELETE  FROM  jeiker.mall_shipping
+    DELETE  FROM  mmall_shipping
     where id = #{shippingId}
     and user_id = #{userId}
   </delete>
 
   <update id="updateByShipping" parameterType="com.jeiker.mall.model.Shipping">
-    update jeiker.mall_shipping
+    update mmall_shipping
     set
       receiver_name = #{receiverName,jdbcType=VARCHAR},
       receiver_phone = #{receiverPhone,jdbcType=VARCHAR},
@@ -204,7 +204,7 @@
   <select id="selectByShippingIdUserId" resultMap="BaseResultMap" parameterType="map">
     SELECT
     <include refid="Base_Column_List"/>
-    from jeiker.mall_shipping
+    from mmall_shipping
     where id = #{shippingId}
     and user_id = #{userId}
   </select>
@@ -213,7 +213,7 @@
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="map">
     SELECT
     <include refid="Base_Column_List"/>
-    from jeiker.mall_shipping
+    from mmall_shipping
     where user_id = #{userId}
   </select>
 

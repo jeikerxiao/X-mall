@@ -20,15 +20,15 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from jeiker.mall_pay_info
+    from mmall_pay_info
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from jeiker.mall_pay_info
+    delete from mmall_pay_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jeiker.mall.model.PayInfo" >
-    insert into jeiker.mall_pay_info (id, user_id, order_no, 
+    insert into mmall_pay_info (id, user_id, order_no,
       pay_platform, platform_number, platform_status, 
       create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, 
@@ -36,7 +36,7 @@
       now(), now())
   </insert>
   <insert id="insertSelective" parameterType="com.jeiker.mall.model.PayInfo" >
-    insert into jeiker.mall_pay_info
+    insert into mmall_pay_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -91,7 +91,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jeiker.mall.model.PayInfo" >
-    update jeiker.mall_pay_info
+    update mmall_pay_info
     <set >
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
@@ -118,7 +118,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jeiker.mall.model.PayInfo" >
-    update jeiker.mall_pay_info
+    update mmall_pay_info
     set user_id = #{userId,jdbcType=INTEGER},
       order_no = #{orderNo,jdbcType=BIGINT},
       pay_platform = #{payPlatform,jdbcType=INTEGER},

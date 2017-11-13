@@ -23,15 +23,15 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from jeiker.mall_order_item
+    from mmall_order_item
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from jeiker.mall_order_item
+    delete from mmall_order_item
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jeiker.mall.model.OrderItem" >
-    insert into jeiker.mall_order_item (id, order_no, product_id, 
+    insert into mmall_order_item (id, order_no, product_id,
       product_name, product_image, current_unit_price, 
       quantity, total_price, create_time, 
       update_time, user_id)
@@ -41,7 +41,7 @@
       now(), #{userId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jeiker.mall.model.OrderItem" >
-    insert into jeiker.mall_order_item
+    insert into mmall_order_item
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -114,7 +114,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jeiker.mall.model.OrderItem" >
-    update jeiker.mall_order_item
+    update mmall_order_item
     <set >
       <if test="orderNo != null" >
         order_no = #{orderNo,jdbcType=BIGINT},
@@ -150,7 +150,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jeiker.mall.model.OrderItem" >
-    update jeiker.mall_order_item
+    update mmall_order_item
     set order_no = #{orderNo,jdbcType=BIGINT},
       product_id = #{productId,jdbcType=INTEGER},
       product_name = #{productName,jdbcType=VARCHAR},
@@ -168,7 +168,7 @@
   <select id="getByOrderNoUserId" parameterType="map" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    from jeiker.mall_order_item
+    from mmall_order_item
     where order_no = #{orderNo}
     and user_id = #{userId}
   </select>
@@ -176,14 +176,14 @@
   <select id="getByOrderNo" parameterType="map" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    from jeiker.mall_order_item
+    from mmall_order_item
     where order_no = #{orderNo}
   </select>
 
 
 
   <insert id="batchInsert" parameterType="list">
-    insert into jeiker.mall_order_item (id, order_no,user_id, product_id,
+    insert into mmall_order_item (id, order_no,user_id, product_id,
       product_name, product_image, current_unit_price,
       quantity, total_price, create_time,
       update_time)
