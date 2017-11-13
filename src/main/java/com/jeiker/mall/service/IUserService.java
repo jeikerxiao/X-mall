@@ -4,7 +4,7 @@ import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
 
 /**
- * Created by geely
+ * Created by geelyz
  */
 public interface IUserService {
 

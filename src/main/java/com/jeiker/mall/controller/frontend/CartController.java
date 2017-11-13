@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  * Created by geely
  */
 @Controller
-@RequestMapping("/cart/")
+@RequestMapping("/app/cart/")
 @Api("前台-类别管理")
 public class CartController {
 

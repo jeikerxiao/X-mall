@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  * Created by geely
  */
 @Controller
-@RequestMapping("/user/")
+@RequestMapping("/app/user/")
 @Api("前台-用户管理")
 public class UserController {
 

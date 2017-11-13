@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by geely
  */
 @Controller
-@RequestMapping("/product/")
+@RequestMapping("/app/product/")
 @Api("前台-产品管理")
 public class ProductController {
 

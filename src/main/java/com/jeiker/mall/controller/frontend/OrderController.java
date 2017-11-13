@@ -31,7 +31,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/order/")
+@RequestMapping("/app/order/")
 @Api("前台-订单管理")
 public class OrderController {
 

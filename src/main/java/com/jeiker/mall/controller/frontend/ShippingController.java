@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  * Created by geely
  */
 @Controller
-@RequestMapping("/shipping/")
+@RequestMapping("/app/shipping/")
 @Api("前台-收货地址管理")
 public class ShippingController {
 
