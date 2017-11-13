@@ -39,6 +39,13 @@
 			<version>1.3.1</version>
 		</dependency>
 
+		<!-- mybatis 分页插件 -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.1.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -52,6 +59,23 @@
 			<version>1.2.29</version>
 		</dependency>
 
+		<!-- time-->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -74,17 +98,17 @@
 			<artifactId>springfox-swagger2</artifactId>
 			<version>${springfox-swagger2.version}</version>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>io.springfox</groupId>-->
-			<!--<artifactId>springfox-swagger-ui</artifactId>-->
-			<!--<version>${springfox-swagger2.version}</version>-->
-		<!--</dependency>-->
-		<!-- 使用第三方swagger2 UI -->
 		<dependency>
-			<groupId>com.github.xiaoymin</groupId>
-			<artifactId>swagger-bootstrap-ui</artifactId>
-			<version>1.6</version>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox-swagger2.version}</version>
 		</dependency>
+		<!-- 使用第三方swagger2 UI -->
+		<!--<dependency>-->
+			<!--<groupId>com.github.xiaoymin</groupId>-->
+			<!--<artifactId>swagger-bootstrap-ui</artifactId>-->
+			<!--<version>1.6</version>-->
+		<!--</dependency>-->
 		<!-- swagger2 end -->
 
 		<dependency>
