@@ -49,7 +49,7 @@ public class OrderController extends BaseController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iOrderService.createOrder(user.getId(), shippingId);
+        return iOrderService.createOrder(getUserId(), shippingId);
     }
 
     @ApiOperation("取消")
@@ -60,19 +60,18 @@ public class OrderController extends BaseController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iOrderService.cancel(user.getId(), orderNo);
+        return iOrderService.cancel(getUserId(), orderNo);
     }
 
     @ApiOperation("获取订单")
     @PostMapping("get_order_cart_product")
     @ResponseBody
-    public ServerResponse getOrderCartProduct(HttpSession session) {
-//        User user = getUser();
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
-//        }
-//        return iOrderService.getOrderCartProduct(user.getId());
-        return iOrderService.getOrderCartProduct(1);
+    public ServerResponse getOrderCartProduct() {
+        User user = getUser();
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return iOrderService.getOrderCartProduct(getUserId());
     }
 
     @ApiOperation("订单详情")
@@ -83,7 +82,7 @@ public class OrderController extends BaseController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iOrderService.getOrderDetail(user.getId(), orderNo);
+        return iOrderService.getOrderDetail(getUserId(), orderNo);
     }
 
     @ApiOperation("订单列表")
@@ -94,7 +93,7 @@ public class OrderController extends BaseController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iOrderService.getOrderList(user.getId(), pageNum, pageSize);
+        return iOrderService.getOrderList(getUserId(), pageNum, pageSize);
     }
 
     @ApiOperation("支付")
@@ -106,7 +105,7 @@ public class OrderController extends BaseController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         String path = request.getSession().getServletContext().getRealPath("upload");
-        return iOrderService.pay(orderNo, user.getId(), path);
+        return iOrderService.pay(orderNo, getUserId(), path);
     }
 
     @ApiOperation("支付宝回调")

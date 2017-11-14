@@ -41,7 +41,7 @@ public class ShippingController extends BaseController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iShippingService.add(user.getId(), shipping);
+        return iShippingService.add(getUserId(), shipping);
     }
 
     @ApiOperation("删除收货地址")
@@ -52,7 +52,7 @@ public class ShippingController extends BaseController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iShippingService.del(user.getId(), shippingId);
+        return iShippingService.del(getUserId(), shippingId);
     }
 
     @ApiOperation("修改收货地址")
@@ -63,7 +63,7 @@ public class ShippingController extends BaseController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iShippingService.update(user.getId(), shipping);
+        return iShippingService.update(getUserId(), shipping);
     }
 
     @ApiOperation("选择")
@@ -74,20 +74,19 @@ public class ShippingController extends BaseController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iShippingService.select(user.getId(), shippingId);
+        return iShippingService.select(getUserId(), shippingId);
     }
 
     @ApiOperation("收货地址列表")
     @PostMapping("list")
     @ResponseBody
     public ServerResponse<PageInfo> list(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-                                         HttpSession session) {
+                                         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iShippingService.list(user.getId(), pageNum, pageSize);
+        return iShippingService.list(getUserId(), pageNum, pageSize);
     }
 
 }

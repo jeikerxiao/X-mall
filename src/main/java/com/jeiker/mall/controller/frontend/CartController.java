@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-
 /**
  * Created by geely
  */
@@ -119,7 +117,7 @@ public class CartController extends BaseController{
     @ApiOperation("获取产品计数")
     @PostMapping("get_cart_product_count")
     @ResponseBody
-    public ServerResponse<Integer> getCartProductCount(HttpSession session) {
+    public ServerResponse<Integer> getCartProductCount() {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createBySuccess(0);

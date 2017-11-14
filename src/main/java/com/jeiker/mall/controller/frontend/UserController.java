@@ -188,11 +188,11 @@ public class UserController extends BaseController{
     @PostMapping("get_information")
     @ResponseBody
     public ServerResponse<User> get_information() {
-        User currentUser = getUser();
-        if (currentUser == null) {
+        User user = getUser();
+        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录,需要强制登录status=10");
         }
-        return iUserService.getInformation(currentUser.getId());
+        return iUserService.getInformation(getUserId());
     }
 
     /**
@@ -202,12 +202,12 @@ public class UserController extends BaseController{
     @PostMapping("info")
     @ResponseBody
     public ServerResponse<User> getInfo() {
-        User currentUser = getUser();
-        if (currentUser == null) {
+        User user = getUser();
+        if (user == null) {
             logger.error("===> getInfo : 用户未登录.");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录,需要强制登录status=10");
         }
-        return iUserService.getInformation(currentUser.getId());
+        return iUserService.getInformation(getUserId());
     }
 
 }
