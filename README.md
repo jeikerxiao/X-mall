@@ -28,6 +28,9 @@ http://localhost:8080/swagger-ui.html
 
 2. 修改项目中数据库连接配置 
 
-3. 运行项目
+3. 运行项目 
 
+    ```
+    mvn spring-boot:run
+    ```
 4. 打开 http://localhost:8080/swagger-ui.html 调试项目
