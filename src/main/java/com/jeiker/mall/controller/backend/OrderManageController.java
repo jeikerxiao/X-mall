@@ -1,13 +1,13 @@
 package com.jeiker.mall.controller.backend;
 
 import com.github.pagehelper.PageInfo;
-import com.jeiker.mall.common.Const;
+import com.jeiker.mall.common.BaseController;
 import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
+import com.jeiker.mall.model.vo.OrderVo;
 import com.jeiker.mall.service.IOrderService;
 import com.jeiker.mall.service.IUserService;
-import com.jeiker.mall.model.vo.OrderVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-
 /**
  * Created by geely
  */
@@ -28,7 +26,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/manage/order")
 @Api("后台-订单管理")
-public class OrderManageController {
+public class OrderManageController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderManageController.class);
 
@@ -40,10 +38,10 @@ public class OrderManageController {
     @ApiOperation("订单列表")
     @PostMapping("list")
     @ResponseBody
-    public ServerResponse<PageInfo> orderList(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+    public ServerResponse<PageInfo> orderList(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
 
@@ -59,9 +57,9 @@ public class OrderManageController {
     @ApiOperation("获取订单详情")
     @PostMapping("detail")
     @ResponseBody
-    public ServerResponse<OrderVo> orderDetail(HttpSession session, Long orderNo) {
+    public ServerResponse<OrderVo> orderDetail(Long orderNo) {
 
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
 
@@ -78,9 +76,9 @@ public class OrderManageController {
     @ApiOperation("搜索订单")
     @PostMapping("search")
     @ResponseBody
-    public ServerResponse<PageInfo> orderSearch(HttpSession session, Long orderNo, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+    public ServerResponse<PageInfo> orderSearch(Long orderNo, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                                 @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
 
@@ -96,9 +94,9 @@ public class OrderManageController {
     @ApiOperation("订单发货")
     @PostMapping("send_goods")
     @ResponseBody
-    public ServerResponse<String> orderSendGoods(HttpSession session, Long orderNo) {
+    public ServerResponse<String> orderSendGoods(Long orderNo) {
 
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
 

@@ -1,9 +1,10 @@
 package com.jeiker.mall.controller.frontend;
 
 import com.github.pagehelper.PageInfo;
+import com.jeiker.mall.common.BaseController;
 import com.jeiker.mall.common.ServerResponse;
-import com.jeiker.mall.service.IProductService;
 import com.jeiker.mall.model.vo.ProductDetailVo;
+import com.jeiker.mall.service.IProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/app/product/")
 @Api("前台-产品管理")
-public class ProductController {
+public class ProductController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 

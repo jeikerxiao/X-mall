@@ -204,4 +204,22 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByError();
     }
 
+    /**
+     * 使用用户名假定做token 获取用户信息
+     * @param token
+     * @return
+     */
+    @Override
+    public ServerResponse<User> getUser(String token) {
+        int resultCount = userMapper.checkUsername(token);
+        if (resultCount == 0) {
+            return ServerResponse.createByErrorMessage("token不存在");
+        }
+        User user = userMapper.selectToken(token);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("用户不存在");
+        }
+        user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
+        return ServerResponse.createBySuccess("获取用户成功", user);
+    }
 }

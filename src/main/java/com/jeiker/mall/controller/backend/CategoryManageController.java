@@ -1,6 +1,6 @@
 package com.jeiker.mall.controller.backend;
 
-import com.jeiker.mall.common.Const;
+import com.jeiker.mall.common.BaseController;
 import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
@@ -17,15 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-
 /**
  * Created by geely
  */
 @Controller
 @RequestMapping("/manage/category")
 @Api("后台-类别管理")
-public class CategoryManageController {
+public class CategoryManageController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryManageController.class);
 
@@ -37,8 +35,8 @@ public class CategoryManageController {
     @ApiOperation("增加类别节点")
     @PostMapping("add_category")
     @ResponseBody
-    public ServerResponse addCategory(HttpSession session, String categoryName, @RequestParam(value = "parentId", defaultValue = "0") int parentId) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse addCategory(String categoryName, @RequestParam(value = "parentId", defaultValue = "0") int parentId) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录");
         }
@@ -56,8 +54,8 @@ public class CategoryManageController {
     @ApiOperation("修改类别名称")
     @PostMapping("set_category_name")
     @ResponseBody
-    public ServerResponse setCategoryName(HttpSession session, Integer categoryId, String categoryName) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse setCategoryName(Integer categoryId, String categoryName) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录");
         }
@@ -72,8 +70,8 @@ public class CategoryManageController {
     @ApiOperation("获取类别子节点")
     @PostMapping("get_category")
     @ResponseBody
-    public ServerResponse getChildrenParallelCategory(HttpSession session, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse getChildrenParallelCategory(@RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录");
         }
@@ -88,8 +86,8 @@ public class CategoryManageController {
     @ApiOperation("获取当前分类id并获取子节点")
     @PostMapping("get_deep_category")
     @ResponseBody
-    public ServerResponse getCategoryAndDeepChildrenCategory(HttpSession session, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse getCategoryAndDeepChildrenCategory(@RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录");
         }

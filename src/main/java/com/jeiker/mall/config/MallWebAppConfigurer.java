@@ -1,7 +1,9 @@
 package com.jeiker.mall.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -22,7 +24,9 @@ public class MallWebAppConfigurer extends WebMvcConfigurerAdapter {
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
         registry.addInterceptor(new MallInterceptor())
-                .addPathPatterns("/manage/**", "/app/**");
+                .addPathPatterns("/manage/**", "/app/**")
+                // 不拦截登录接口
+                .excludePathPatterns("/app/user/login");
         //registry.addInterceptor(new MyInterceptor2()).addPathPatterns("/**");
         super.addInterceptors(registry);
     }

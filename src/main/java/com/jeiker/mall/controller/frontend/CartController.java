@@ -1,11 +1,12 @@
 package com.jeiker.mall.controller.frontend;
 
+import com.jeiker.mall.common.BaseController;
 import com.jeiker.mall.common.Const;
 import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
-import com.jeiker.mall.service.ICartService;
 import com.jeiker.mall.model.vo.CartVo;
+import com.jeiker.mall.service.ICartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/app/cart/")
 @Api("前台-类别管理")
-public class CartController {
+public class CartController extends BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
@@ -34,20 +35,15 @@ public class CartController {
     @ApiOperation("类别列表")
     @PostMapping("list")
     @ResponseBody
-    public ServerResponse<CartVo> list(HttpSession session) {
-//        User user = (User) session.getAttribute(Const.CURRENT_USER);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
-//        }
-//        return iCartService.list(user.getId());
-        return iCartService.list(1);
+    public ServerResponse<CartVo> list() {
+        return iCartService.list(getUserId());
     }
 
     @ApiOperation("增加类别")
     @PostMapping("add")
     @ResponseBody
-    public ServerResponse<CartVo> add(HttpSession session, Integer count, Integer productId) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<CartVo> add(Integer count, Integer productId) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -57,8 +53,8 @@ public class CartController {
     @ApiOperation("修改类别")
     @PostMapping("update")
     @ResponseBody
-    public ServerResponse<CartVo> update(HttpSession session, Integer count, Integer productId) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<CartVo> update(Integer count, Integer productId) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -68,8 +64,8 @@ public class CartController {
     @ApiOperation("产品详情")
     @PostMapping("delete_product")
     @ResponseBody
-    public ServerResponse<CartVo> deleteProduct(HttpSession session, String productIds) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<CartVo> deleteProduct(String productIds) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -79,8 +75,8 @@ public class CartController {
     @ApiOperation("选择所有类别")
     @PostMapping("select_all")
     @ResponseBody
-    public ServerResponse<CartVo> selectAll(HttpSession session) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<CartVo> selectAll() {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -90,8 +86,8 @@ public class CartController {
     @ApiOperation("全不选")
     @PostMapping("un_select_all")
     @ResponseBody
-    public ServerResponse<CartVo> unSelectAll(HttpSession session) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<CartVo> unSelectAll() {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -101,8 +97,8 @@ public class CartController {
     @ApiOperation("选择")
     @PostMapping("select")
     @ResponseBody
-    public ServerResponse<CartVo> select(HttpSession session, Integer productId) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<CartVo> select( Integer productId) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -112,8 +108,8 @@ public class CartController {
     @ApiOperation("不选择")
     @PostMapping("un_select")
     @ResponseBody
-    public ServerResponse<CartVo> unSelect(HttpSession session, Integer productId) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<CartVo> unSelect( Integer productId) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -124,7 +120,7 @@ public class CartController {
     @PostMapping("get_cart_product_count")
     @ResponseBody
     public ServerResponse<Integer> getCartProductCount(HttpSession session) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createBySuccess(0);
         }

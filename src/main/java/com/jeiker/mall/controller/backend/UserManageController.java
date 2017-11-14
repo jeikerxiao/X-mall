@@ -1,5 +1,6 @@
 package com.jeiker.mall.controller.backend;
 
+import com.jeiker.mall.common.BaseController;
 import com.jeiker.mall.common.Const;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/manage/user")
 @Api("后台-用户管理")
-public class UserManageController {
+public class UserManageController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserManageController.class);
 

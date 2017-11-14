@@ -31,4 +31,6 @@ public interface UserMapper {
     int checkPassword(@Param(value = "password") String password, @Param("userId") Integer userId);
 
     int checkEmailByUserId(@Param(value = "email") String email, @Param(value = "userId") Integer userId);
+
+    User selectToken(@Param("username") String username);
 }

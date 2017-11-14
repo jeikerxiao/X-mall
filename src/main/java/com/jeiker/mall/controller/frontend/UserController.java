@@ -1,6 +1,6 @@
 package com.jeiker.mall.controller.frontend;
 
-import com.jeiker.mall.common.Const;
+import com.jeiker.mall.common.BaseController;
 import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
@@ -17,15 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-
 /**
  * Created by geely
  */
 @Controller
 @RequestMapping("/app/user/")
 @Api("前台-用户管理")
-public class UserController {
+public class UserController extends BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -34,32 +32,25 @@ public class UserController {
 
     /**
      * 用户登录
-     *
-     * @param session
-     * @return
      */
     @ApiOperation("用户登录")
     @PostMapping("login")
     @ResponseBody
-    public ServerResponse<User> login(HttpSession session, @RequestBody LoginVo loginVo) {
+    public ServerResponse<User> login(@RequestBody LoginVo loginVo) {
         ServerResponse<User> response = iUserService.login(loginVo.getUsername(), loginVo.getPassword());
-        if (response.isSuccess()) {
-            session.setAttribute(Const.CURRENT_USER, response.getData());
-        }
         return response;
     }
 
     /**
      * 用户登出
      *
-     * @param session
      * @return
      */
     @ApiOperation("用户退出")
     @PostMapping("logout")
     @ResponseBody
-    public ServerResponse<String> logout(HttpSession session) {
-        session.removeAttribute(Const.CURRENT_USER);
+    public ServerResponse<String> logout() {
+        logoutUser();
         return ServerResponse.createBySuccess();
     }
 
@@ -92,15 +83,12 @@ public class UserController {
 
     /**
      * 获取用户信息
-     *
-     * @param session
-     * @return
      */
     @ApiOperation("用户信息")
     @PostMapping("get_user_info")
     @ResponseBody
-    public ServerResponse<User> getUserInfo(HttpSession session) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<User> getUserInfo() {
+        User user = getUser();
         if (user != null) {
             return ServerResponse.createBySuccess(user);
         }
@@ -152,8 +140,6 @@ public class UserController {
 
     /**
      * 重置密码
-     *
-     * @param session
      * @param passwordOld
      * @param passwordNew
      * @return
@@ -161,8 +147,8 @@ public class UserController {
     @ApiOperation("重置密码")
     @PostMapping("reset_password")
     @ResponseBody
-    public ServerResponse<String> resetPassword(HttpSession session, String passwordOld, String passwordNew) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<String> resetPassword(String passwordOld, String passwordNew) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
@@ -172,15 +158,14 @@ public class UserController {
     /**
      * 更新个人信息
      *
-     * @param session
      * @param user
      * @return
      */
     @ApiOperation("修改个人信息")
     @PostMapping("update_information")
     @ResponseBody
-    public ServerResponse<User> update_information(HttpSession session, User user) {
-        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<User> update_information(User user) {
+        User currentUser = getUser();
         if (currentUser == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
@@ -189,7 +174,7 @@ public class UserController {
         ServerResponse<User> response = iUserService.updateInformation(user);
         if (response.isSuccess()) {
             response.getData().setUsername(currentUser.getUsername());
-            session.setAttribute(Const.CURRENT_USER, response.getData());
+            setUser(response.getData());
         }
         return response;
     }
@@ -197,15 +182,29 @@ public class UserController {
     /**
      * 获取个人信息
      *
-     * @param session
      * @return
      */
     @ApiOperation("获取个人信息")
     @PostMapping("get_information")
     @ResponseBody
-    public ServerResponse<User> get_information(HttpSession session) {
-        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<User> get_information() {
+        User currentUser = getUser();
         if (currentUser == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录,需要强制登录status=10");
+        }
+        return iUserService.getInformation(currentUser.getId());
+    }
+
+    /**
+     * 获取个人信息
+     */
+    @ApiOperation("个人信息")
+    @PostMapping("info")
+    @ResponseBody
+    public ServerResponse<User> getInfo() {
+        User currentUser = getUser();
+        if (currentUser == null) {
+            logger.error("===> getInfo : 用户未登录.");
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录,需要强制登录status=10");
         }
         return iUserService.getInformation(currentUser.getId());

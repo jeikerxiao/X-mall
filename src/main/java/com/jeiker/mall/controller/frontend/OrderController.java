@@ -5,6 +5,7 @@ package com.jeiker.mall.controller.frontend;
 //import com.alipay.demo.trade.config.Configs;
 
 import com.google.common.collect.Maps;
+import com.jeiker.mall.common.BaseController;
 import com.jeiker.mall.common.Const;
 import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
@@ -33,7 +34,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/app/order/")
 @Api("前台-订单管理")
-public class OrderController {
+public class OrderController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
@@ -43,8 +44,8 @@ public class OrderController {
     @ApiOperation("创建订单")
     @PostMapping("create")
     @ResponseBody
-    public ServerResponse create(HttpSession session, Integer shippingId) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse create( Integer shippingId) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -54,8 +55,8 @@ public class OrderController {
     @ApiOperation("取消")
     @PostMapping("cancel")
     @ResponseBody
-    public ServerResponse cancel(HttpSession session, Long orderNo) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse cancel( Long orderNo) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -66,7 +67,7 @@ public class OrderController {
     @PostMapping("get_order_cart_product")
     @ResponseBody
     public ServerResponse getOrderCartProduct(HttpSession session) {
-//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+//        User user = getUser();
 //        if (user == null) {
 //            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
 //        }
@@ -77,8 +78,8 @@ public class OrderController {
     @ApiOperation("订单详情")
     @PostMapping("detail")
     @ResponseBody
-    public ServerResponse detail(HttpSession session, Long orderNo) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse detail( Long orderNo) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -88,8 +89,8 @@ public class OrderController {
     @ApiOperation("订单列表")
     @PostMapping("list")
     @ResponseBody
-    public ServerResponse list(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse list( @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -99,8 +100,8 @@ public class OrderController {
     @ApiOperation("支付")
     @PostMapping("pay")
     @ResponseBody
-    public ServerResponse pay(HttpSession session, Long orderNo, HttpServletRequest request) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse pay( Long orderNo, HttpServletRequest request) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
@@ -155,8 +156,8 @@ public class OrderController {
     @ApiOperation("查询订单状态")
     @PostMapping("query_order_pay_status")
     @ResponseBody
-    public ServerResponse<Boolean> queryOrderPayStatus(HttpSession session, Long orderNo) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+    public ServerResponse<Boolean> queryOrderPayStatus( Long orderNo) {
+        User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
