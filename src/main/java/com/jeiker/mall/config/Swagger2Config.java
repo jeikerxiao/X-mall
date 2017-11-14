@@ -56,7 +56,7 @@ public class Swagger2Config {
                 .title("x-mall 商城项目")
                 .license("MIT")
                 .licenseUrl("http://opensource.org/licenses/MIT")
-                .contact(new Contact("jeiker", "jeiker.cn", "jeiker@126.com"))
+                .contact(new Contact("jeiker", "http://jeiker.cn", "jeiker@126.com"))
                 .version("1.0")
                 .build();
         return apiInfo;
