@@ -3,6 +3,7 @@ package com.jeiker.mall.controller.frontend;
 import com.github.pagehelper.PageInfo;
 import com.jeiker.mall.common.BaseController;
 import com.jeiker.mall.common.ServerResponse;
+import com.jeiker.mall.model.req.IdVo;
 import com.jeiker.mall.model.vo.ProductDetailVo;
 import com.jeiker.mall.service.IProductService;
 import io.swagger.annotations.Api;
@@ -11,10 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by geely
@@ -32,8 +30,8 @@ public class ProductController extends BaseController {
     @ApiOperation("产品详情")
     @PostMapping("detail")
     @ResponseBody
-    public ServerResponse<ProductDetailVo> detail(Integer productId) {
-        return iProductService.getProductDetail(productId);
+    public ServerResponse<ProductDetailVo> detail(@RequestBody IdVo productId) {
+        return iProductService.getProductDetail(productId.getId());
     }
 
     @ApiOperation("产品列表")

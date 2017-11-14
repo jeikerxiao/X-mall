@@ -4,7 +4,7 @@ import com.jeiker.mall.common.BaseController;
 import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
-import com.jeiker.mall.model.req.LoginVo;
+import com.jeiker.mall.model.req.*;
 import com.jeiker.mall.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,10 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by geely
@@ -47,7 +44,7 @@ public class UserController extends BaseController{
      * @return
      */
     @ApiOperation("用户退出")
-    @PostMapping("logout")
+    @GetMapping("logout")
     @ResponseBody
     public ServerResponse<String> logout() {
         logoutUser();
@@ -63,29 +60,28 @@ public class UserController extends BaseController{
     @ApiOperation("用户注册")
     @PostMapping("register")
     @ResponseBody
-    public ServerResponse<String> register(User user) {
+    public ServerResponse<String> register(@RequestBody User user) {
         return iUserService.register(user);
     }
 
     /**
      * 用户校验
      *
-     * @param str
-     * @param type
      * @return
      */
     @ApiOperation("用户校验")
     @PostMapping("check_valid")
     @ResponseBody
-    public ServerResponse<String> checkValid(String str, String type) {
-        return iUserService.checkValid(str, type);
+    public ServerResponse<String> checkValid(@RequestBody CheckValidVo checkValidVo) {
+        return iUserService.checkValid(checkValidVo.getStr(), checkValidVo.getType()
+        );
     }
 
     /**
      * 获取用户信息
      */
     @ApiOperation("用户信息")
-    @PostMapping("get_user_info")
+    @GetMapping("get_user_info")
     @ResponseBody
     public ServerResponse<User> getUserInfo() {
         User user = getUser();
@@ -98,61 +94,51 @@ public class UserController extends BaseController{
     /**
      * 获取忘记密码问题
      *
-     * @param username
      * @return
      */
     @ApiOperation("忘记密码问题")
     @PostMapping("forget_get_question")
     @ResponseBody
-    public ServerResponse<String> forgetGetQuestion(String username) {
-        return iUserService.selectQuestion(username);
+    public ServerResponse<String> forgetGetQuestion(@RequestBody UserNameVo userNameVo) {
+        return iUserService.selectQuestion(userNameVo.getUsername());
     }
 
     /**
      * 忘记密码提交答案
      *
-     * @param username
-     * @param question
-     * @param answer
      * @return
      */
     @ApiOperation("忘记密码问题答案")
     @PostMapping("forget_check_answer")
     @ResponseBody
-    public ServerResponse<String> forgetCheckAnswer(String username, String question, String answer) {
-        return iUserService.checkAnswer(username, question, answer);
+    public ServerResponse<String> forgetCheckAnswer(@RequestBody CheckAnswerVo checkAnswerVo) {
+        return iUserService.checkAnswer(checkAnswerVo.getUsername(), checkAnswerVo.getQuestion(), checkAnswerVo.getAnswer());
     }
 
     /**
      * 忘记密码，重置密码
-     *
-     * @param username
-     * @param passwordNew
-     * @param forgetToken
      * @return
      */
     @ApiOperation("忘记密码重置密码")
     @PostMapping("forget_reset_password")
     @ResponseBody
-    public ServerResponse<String> forgetRestPassword(String username, String passwordNew, String forgetToken) {
-        return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
+    public ServerResponse<String> forgetRestPassword(@RequestBody ForgetPasswordVo passwordVo) {
+        return iUserService.forgetResetPassword(passwordVo.getUsername(), passwordVo.getPasswordNew(), passwordVo.getForgetToken());
     }
 
     /**
      * 重置密码
-     * @param passwordOld
-     * @param passwordNew
      * @return
      */
     @ApiOperation("重置密码")
     @PostMapping("reset_password")
     @ResponseBody
-    public ServerResponse<String> resetPassword(String passwordOld, String passwordNew) {
+    public ServerResponse<String> resetPassword(@RequestBody ResetPasswordVo passwordVo) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
-        return iUserService.resetPassword(passwordOld, passwordNew, user);
+        return iUserService.resetPassword(passwordVo.getPasswordOld(), passwordVo.getPasswordNew(), user);
     }
 
     /**
@@ -164,7 +150,7 @@ public class UserController extends BaseController{
     @ApiOperation("修改个人信息")
     @PostMapping("update_information")
     @ResponseBody
-    public ServerResponse<User> update_information(User user) {
+    public ServerResponse<User> update_information(@RequestBody User user) {
         User currentUser = getUser();
         if (currentUser == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
@@ -185,9 +171,9 @@ public class UserController extends BaseController{
      * @return
      */
     @ApiOperation("获取个人信息")
-    @PostMapping("get_information")
+    @GetMapping("information")
     @ResponseBody
-    public ServerResponse<User> get_information() {
+    public ServerResponse<User> getInformation() {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录,需要强制登录status=10");
@@ -199,7 +185,7 @@ public class UserController extends BaseController{
      * 获取个人信息
      */
     @ApiOperation("个人信息")
-    @PostMapping("info")
+    @GetMapping("info")
     @ResponseBody
     public ServerResponse<User> getInfo() {
         User user = getUser();

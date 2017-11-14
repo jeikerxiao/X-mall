@@ -6,6 +6,10 @@ import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.Product;
 import com.jeiker.mall.model.User;
+import com.jeiker.mall.model.req.IdVo;
+import com.jeiker.mall.model.req.PageVo;
+import com.jeiker.mall.model.req.ProductSearchVo;
+import com.jeiker.mall.model.req.StatusVo;
 import com.jeiker.mall.service.IFileService;
 import com.jeiker.mall.service.IProductService;
 import com.jeiker.mall.service.IUserService;
@@ -17,10 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +49,7 @@ public class ProductManageController extends BaseController {
     @ApiOperation("新增产品")
     @PostMapping("save")
     @ResponseBody
-    public ServerResponse productSave(Product product) {
+    public ServerResponse productSave(@RequestBody Product product) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
@@ -65,14 +66,14 @@ public class ProductManageController extends BaseController {
     @ApiOperation("产品上下架")
     @PostMapping("set_sale_status")
     @ResponseBody
-    public ServerResponse setSaleStatus(Integer productId, Integer status) {
+    public ServerResponse setSaleStatus(@RequestBody StatusVo statusVo) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
 
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
-            return iProductService.setSaleStatus(productId, status);
+            return iProductService.setSaleStatus(statusVo.getId(), statusVo.getStatus());
         } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
@@ -81,7 +82,7 @@ public class ProductManageController extends BaseController {
     @ApiOperation("产品详情")
     @PostMapping("detail")
     @ResponseBody
-    public ServerResponse getDetail(Integer productId) {
+    public ServerResponse getDetail(@RequestBody IdVo productId) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
@@ -89,7 +90,7 @@ public class ProductManageController extends BaseController {
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充业务
-            return iProductService.manageProductDetail(productId);
+            return iProductService.manageProductDetail(productId.getId());
 
         } else {
             return ServerResponse.createByErrorMessage("无权限操作");
@@ -99,7 +100,7 @@ public class ProductManageController extends BaseController {
     @ApiOperation("产品列表")
     @PostMapping("list")
     @ResponseBody
-    public ServerResponse getList(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ServerResponse getList(@RequestBody PageVo pageVo) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
@@ -107,7 +108,7 @@ public class ProductManageController extends BaseController {
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充业务
-            return iProductService.getProductList(pageNum, pageSize);
+            return iProductService.getProductList(pageVo.getPageNum(), pageVo.getPageSize());
         } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
@@ -116,7 +117,7 @@ public class ProductManageController extends BaseController {
     @ApiOperation("产品搜索")
     @PostMapping("search")
     @ResponseBody
-    public ServerResponse productSearch(String productName, Integer productId, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ServerResponse productSearch(@RequestBody ProductSearchVo productVo) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
@@ -124,7 +125,7 @@ public class ProductManageController extends BaseController {
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充业务
-            return iProductService.searchProduct(productName, productId, pageNum, pageSize);
+            return iProductService.searchProduct(productVo.getName(), productVo.getId(), productVo.getPageNum(), productVo.getPageSize());
         } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }

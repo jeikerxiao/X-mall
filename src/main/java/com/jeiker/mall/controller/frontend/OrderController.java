@@ -10,6 +10,9 @@ import com.jeiker.mall.common.Const;
 import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
+import com.jeiker.mall.model.req.IdVo;
+import com.jeiker.mall.model.req.LongIdVo;
+import com.jeiker.mall.model.req.PageVo;
 import com.jeiker.mall.service.IOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,10 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -44,23 +44,23 @@ public class OrderController extends BaseController {
     @ApiOperation("创建订单")
     @PostMapping("create")
     @ResponseBody
-    public ServerResponse create( Integer shippingId) {
+    public ServerResponse create(@RequestBody IdVo shippingId) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iOrderService.createOrder(getUserId(), shippingId);
+        return iOrderService.createOrder(getUserId(), shippingId.getId());
     }
 
     @ApiOperation("取消")
     @PostMapping("cancel")
     @ResponseBody
-    public ServerResponse cancel( Long orderNo) {
+    public ServerResponse cancel(@RequestBody LongIdVo orderNo) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iOrderService.cancel(getUserId(), orderNo);
+        return iOrderService.cancel(getUserId(), orderNo.getId());
     }
 
     @ApiOperation("获取订单")
@@ -77,35 +77,35 @@ public class OrderController extends BaseController {
     @ApiOperation("订单详情")
     @PostMapping("detail")
     @ResponseBody
-    public ServerResponse detail( Long orderNo) {
+    public ServerResponse detail(@RequestBody LongIdVo orderNo) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iOrderService.getOrderDetail(getUserId(), orderNo);
+        return iOrderService.getOrderDetail(getUserId(), orderNo.getId());
     }
 
     @ApiOperation("订单列表")
     @PostMapping("list")
     @ResponseBody
-    public ServerResponse list( @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ServerResponse list(@RequestBody PageVo pageVo) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iOrderService.getOrderList(getUserId(), pageNum, pageSize);
+        return iOrderService.getOrderList(getUserId(), pageVo.getPageNum(), pageVo.getPageSize());
     }
 
     @ApiOperation("支付")
     @PostMapping("pay")
     @ResponseBody
-    public ServerResponse pay( Long orderNo, HttpServletRequest request) {
+    public ServerResponse pay(@RequestBody LongIdVo orderNo, HttpServletRequest request) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         String path = request.getSession().getServletContext().getRealPath("upload");
-        return iOrderService.pay(orderNo, getUserId(), path);
+        return iOrderService.pay(orderNo.getId(), getUserId(), path);
     }
 
     @ApiOperation("支付宝回调")
@@ -155,13 +155,13 @@ public class OrderController extends BaseController {
     @ApiOperation("查询订单状态")
     @PostMapping("query_order_pay_status")
     @ResponseBody
-    public ServerResponse<Boolean> queryOrderPayStatus( Long orderNo) {
+    public ServerResponse<Boolean> queryOrderPayStatus(@RequestBody LongIdVo orderNo) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
 
-        ServerResponse serverResponse = iOrderService.queryOrderPayStatus(user.getId(), orderNo);
+        ServerResponse serverResponse = iOrderService.queryOrderPayStatus(getUserId(), orderNo.getId());
         if (serverResponse.isSuccess()) {
             return ServerResponse.createBySuccess(true);
         }

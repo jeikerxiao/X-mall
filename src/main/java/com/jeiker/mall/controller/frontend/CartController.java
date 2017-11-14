@@ -5,6 +5,9 @@ import com.jeiker.mall.common.Const;
 import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
+import com.jeiker.mall.model.req.CountVo;
+import com.jeiker.mall.model.req.IdVo;
+import com.jeiker.mall.model.req.ProductIdsVo;
 import com.jeiker.mall.model.vo.CartVo;
 import com.jeiker.mall.service.ICartService;
 import io.swagger.annotations.Api;
@@ -14,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -40,34 +44,34 @@ public class CartController extends BaseController{
     @ApiOperation("增加类别")
     @PostMapping("add")
     @ResponseBody
-    public ServerResponse<CartVo> add(Integer count, Integer productId) {
+    public ServerResponse<CartVo> add(@RequestBody CountVo countVo) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iCartService.add(user.getId(), productId, count);
+        return iCartService.add(getUserId(), countVo.getProductId(), countVo.getCount());
     }
 
     @ApiOperation("修改类别")
     @PostMapping("update")
     @ResponseBody
-    public ServerResponse<CartVo> update(Integer count, Integer productId) {
+    public ServerResponse<CartVo> update(@RequestBody CountVo countVo) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iCartService.update(user.getId(), productId, count);
+        return iCartService.update(user.getId(), countVo.getProductId(), countVo.getCount());
     }
 
     @ApiOperation("产品详情")
     @PostMapping("delete_product")
     @ResponseBody
-    public ServerResponse<CartVo> deleteProduct(String productIds) {
+    public ServerResponse<CartVo> deleteProduct(@RequestBody ProductIdsVo productIds) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iCartService.deleteProduct(user.getId(), productIds);
+        return iCartService.deleteProduct(user.getId(), productIds.getIds());
     }
 
     @ApiOperation("选择所有类别")
@@ -95,23 +99,23 @@ public class CartController extends BaseController{
     @ApiOperation("选择")
     @PostMapping("select")
     @ResponseBody
-    public ServerResponse<CartVo> select( Integer productId) {
+    public ServerResponse<CartVo> select(@RequestBody IdVo productId) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iCartService.selectOrUnSelect(user.getId(), productId, Const.Cart.CHECKED);
+        return iCartService.selectOrUnSelect(user.getId(), productId.getId(), Const.Cart.CHECKED);
     }
 
     @ApiOperation("不选择")
     @PostMapping("un_select")
     @ResponseBody
-    public ServerResponse<CartVo> unSelect( Integer productId) {
+    public ServerResponse<CartVo> unSelect(@RequestBody IdVo productId) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iCartService.selectOrUnSelect(user.getId(), productId, Const.Cart.UN_CHECKED);
+        return iCartService.selectOrUnSelect(user.getId(), productId.getId(), Const.Cart.UN_CHECKED);
     }
 
     @ApiOperation("获取产品计数")
