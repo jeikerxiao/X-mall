@@ -16,10 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by geely
@@ -35,7 +32,7 @@ public class CartController extends BaseController{
     private ICartService iCartService;
 
     @ApiOperation("类别列表")
-    @PostMapping("list")
+    @GetMapping("list")
     @ResponseBody
     public ServerResponse<CartVo> list() {
         return iCartService.list(getUserId());
@@ -75,7 +72,7 @@ public class CartController extends BaseController{
     }
 
     @ApiOperation("选择所有类别")
-    @PostMapping("select_all")
+    @GetMapping("select_all")
     @ResponseBody
     public ServerResponse<CartVo> selectAll() {
         User user = getUser();
@@ -86,7 +83,7 @@ public class CartController extends BaseController{
     }
 
     @ApiOperation("全不选")
-    @PostMapping("un_select_all")
+    @GetMapping("un_select_all")
     @ResponseBody
     public ServerResponse<CartVo> unSelectAll() {
         User user = getUser();
@@ -119,7 +116,7 @@ public class CartController extends BaseController{
     }
 
     @ApiOperation("获取产品计数")
-    @PostMapping("get_cart_product_count")
+    @GetMapping("get_cart_product_count")
     @ResponseBody
     public ServerResponse<Integer> getCartProductCount() {
         User user = getUser();

@@ -64,7 +64,7 @@ public class OrderController extends BaseController {
     }
 
     @ApiOperation("获取订单")
-    @PostMapping("get_order_cart_product")
+    @GetMapping("get_order_cart_product")
     @ResponseBody
     public ServerResponse getOrderCartProduct() {
         User user = getUser();

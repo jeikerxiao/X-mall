@@ -6,6 +6,7 @@ import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.Shipping;
 import com.jeiker.mall.model.User;
+import com.jeiker.mall.model.req.IdVo;
 import com.jeiker.mall.model.req.PageVo;
 import com.jeiker.mall.service.IShippingService;
 import io.swagger.annotations.Api;
@@ -34,7 +35,7 @@ public class ShippingController extends BaseController {
     @ApiOperation("新增收货地址")
     @PostMapping("add")
     @ResponseBody
-    public ServerResponse add( Shipping shipping) {
+    public ServerResponse add(@RequestBody Shipping shipping) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -45,18 +46,18 @@ public class ShippingController extends BaseController {
     @ApiOperation("删除收货地址")
     @PostMapping("del")
     @ResponseBody
-    public ServerResponse del( Integer shippingId) {
+    public ServerResponse del(@RequestBody IdVo shippingId) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iShippingService.del(getUserId(), shippingId);
+        return iShippingService.del(getUserId(), shippingId.getId());
     }
 
     @ApiOperation("修改收货地址")
     @PostMapping("update")
     @ResponseBody
-    public ServerResponse update( Shipping shipping) {
+    public ServerResponse update(@RequestBody Shipping shipping) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
@@ -67,12 +68,12 @@ public class ShippingController extends BaseController {
     @ApiOperation("选择")
     @PostMapping("select")
     @ResponseBody
-    public ServerResponse<Shipping> select( Integer shippingId) {
+    public ServerResponse<Shipping> select(@RequestBody IdVo shippingId) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        return iShippingService.select(getUserId(), shippingId);
+        return iShippingService.select(getUserId(), shippingId.getId());
     }
 
     @ApiOperation("收货地址列表")
