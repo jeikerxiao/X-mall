@@ -34,7 +34,7 @@ public class UserManageController extends BaseController {
     private IUserService iUserService;
 
     @ApiOperation("用户登录")
-    @PostMapping("login")
+    @PostMapping("/login")
     @ResponseBody
     public ServerResponse<User> login(@RequestBody LoginVo loginVo) {
         ServerResponse<User> response = iUserService.login(loginVo.getUsername(), loginVo.getPassword());

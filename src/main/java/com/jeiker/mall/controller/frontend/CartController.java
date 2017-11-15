@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by geely
  */
 @Controller
-@RequestMapping("/app/cart/")
+@RequestMapping("/app/cart")
 @Api("前台-类别管理")
 public class CartController extends BaseController{
 
@@ -32,14 +32,14 @@ public class CartController extends BaseController{
     private ICartService iCartService;
 
     @ApiOperation("类别列表")
-    @GetMapping("list")
+    @GetMapping("/list")
     @ResponseBody
     public ServerResponse<CartVo> list() {
         return iCartService.list(getUserId());
     }
 
     @ApiOperation("增加类别")
-    @PostMapping("add")
+    @PostMapping("/add")
     @ResponseBody
     public ServerResponse<CartVo> add(@RequestBody CountVo countVo) {
         User user = getUser();
@@ -50,7 +50,7 @@ public class CartController extends BaseController{
     }
 
     @ApiOperation("修改类别")
-    @PostMapping("update")
+    @PostMapping("/update")
     @ResponseBody
     public ServerResponse<CartVo> update(@RequestBody CountVo countVo) {
         User user = getUser();
@@ -60,8 +60,8 @@ public class CartController extends BaseController{
         return iCartService.update(user.getId(), countVo.getProductId(), countVo.getCount());
     }
 
-    @ApiOperation("产品详情")
-    @PostMapping("delete_product")
+    @ApiOperation("删除产品")
+    @PostMapping("/delete")
     @ResponseBody
     public ServerResponse<CartVo> deleteProduct(@RequestBody ProductIdsVo productIds) {
         User user = getUser();
@@ -72,7 +72,7 @@ public class CartController extends BaseController{
     }
 
     @ApiOperation("选择所有类别")
-    @GetMapping("select_all")
+    @GetMapping("/selected_all")
     @ResponseBody
     public ServerResponse<CartVo> selectAll() {
         User user = getUser();
@@ -83,7 +83,7 @@ public class CartController extends BaseController{
     }
 
     @ApiOperation("全不选")
-    @GetMapping("un_select_all")
+    @GetMapping("/unselected_all")
     @ResponseBody
     public ServerResponse<CartVo> unSelectAll() {
         User user = getUser();
@@ -94,7 +94,7 @@ public class CartController extends BaseController{
     }
 
     @ApiOperation("选择")
-    @PostMapping("select")
+    @PostMapping("/selected")
     @ResponseBody
     public ServerResponse<CartVo> select(@RequestBody IdVo productId) {
         User user = getUser();
@@ -105,7 +105,7 @@ public class CartController extends BaseController{
     }
 
     @ApiOperation("不选择")
-    @PostMapping("un_select")
+    @PostMapping("/unselected")
     @ResponseBody
     public ServerResponse<CartVo> unSelect(@RequestBody IdVo productId) {
         User user = getUser();
@@ -116,7 +116,7 @@ public class CartController extends BaseController{
     }
 
     @ApiOperation("获取产品计数")
-    @GetMapping("get_cart_product_count")
+    @GetMapping("/count")
     @ResponseBody
     public ServerResponse<Integer> getCartProductCount() {
         User user = getUser();

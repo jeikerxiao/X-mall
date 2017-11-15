@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * Created by geely
  */
 @Controller
-@RequestMapping("/app/shipping/")
+@RequestMapping("/app/shipping")
 @Api("前台-收货地址管理")
 public class ShippingController extends BaseController {
 
@@ -33,7 +33,7 @@ public class ShippingController extends BaseController {
     private IShippingService iShippingService;
 
     @ApiOperation("新增收货地址")
-    @PostMapping("add")
+    @PostMapping("/add")
     @ResponseBody
     public ServerResponse add(@RequestBody Shipping shipping) {
         User user = getUser();
@@ -44,7 +44,7 @@ public class ShippingController extends BaseController {
     }
 
     @ApiOperation("删除收货地址")
-    @PostMapping("del")
+    @PostMapping("/del")
     @ResponseBody
     public ServerResponse del(@RequestBody IdVo shippingId) {
         User user = getUser();
@@ -55,7 +55,7 @@ public class ShippingController extends BaseController {
     }
 
     @ApiOperation("修改收货地址")
-    @PostMapping("update")
+    @PostMapping("/update")
     @ResponseBody
     public ServerResponse update(@RequestBody Shipping shipping) {
         User user = getUser();
@@ -66,7 +66,7 @@ public class ShippingController extends BaseController {
     }
 
     @ApiOperation("选择")
-    @PostMapping("select")
+    @PostMapping("/select")
     @ResponseBody
     public ServerResponse<Shipping> select(@RequestBody IdVo shippingId) {
         User user = getUser();
@@ -77,7 +77,7 @@ public class ShippingController extends BaseController {
     }
 
     @ApiOperation("收货地址列表")
-    @PostMapping("list")
+    @PostMapping("/list")
     @ResponseBody
     public ServerResponse<PageInfo> list(@RequestBody PageVo pageVo) {
         User user = getUser();

@@ -36,7 +36,7 @@ public class OrderManageController extends BaseController {
     private IOrderService iOrderService;
 
     @ApiOperation("订单列表")
-    @PostMapping("list")
+    @PostMapping("/list")
     @ResponseBody
     public ServerResponse<PageInfo> orderList(@RequestBody PageVo pageVo) {
 
@@ -54,7 +54,7 @@ public class OrderManageController extends BaseController {
     }
 
     @ApiOperation("获取订单详情")
-    @PostMapping("detail")
+    @PostMapping("/detail")
     @ResponseBody
     public ServerResponse<OrderVo> orderDetail(@RequestBody LongIdVo orderNo) {
 
@@ -73,7 +73,7 @@ public class OrderManageController extends BaseController {
     }
 
     @ApiOperation("搜索订单")
-    @PostMapping("search")
+    @PostMapping("/search")
     @ResponseBody
     public ServerResponse<PageInfo> orderSearch(@RequestBody SearchVo searchVo) {
         User user = getUser();
@@ -90,7 +90,7 @@ public class OrderManageController extends BaseController {
     }
 
     @ApiOperation("订单发货")
-    @PostMapping("send_goods")
+    @PostMapping("/send")
     @ResponseBody
     public ServerResponse<String> orderSendGoods(@RequestBody LongIdVo orderNo) {
 

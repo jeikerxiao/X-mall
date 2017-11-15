@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by geely
  */
 @Controller
-@RequestMapping("/app/product/")
+@RequestMapping("/app/product")
 @Api("前台-产品管理")
 public class ProductController extends BaseController {
 
@@ -28,14 +28,14 @@ public class ProductController extends BaseController {
     private IProductService iProductService;
 
     @ApiOperation("产品详情")
-    @PostMapping("detail")
+    @PostMapping("/detail")
     @ResponseBody
     public ServerResponse<ProductDetailVo> detail(@RequestBody IdVo productId) {
         return iProductService.getProductDetail(productId.getId());
     }
 
     @ApiOperation("产品列表")
-    @PostMapping("list")
+    @PostMapping("/list")
     @ResponseBody
     public ServerResponse<PageInfo> list(@RequestParam(value = "keyword", required = false) String keyword,
                                          @RequestParam(value = "categoryId", required = false) Integer categoryId,

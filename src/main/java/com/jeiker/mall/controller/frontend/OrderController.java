@@ -32,7 +32,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/app/order/")
+@RequestMapping("/app/order")
 @Api("前台-订单管理")
 public class OrderController extends BaseController {
 
@@ -42,7 +42,7 @@ public class OrderController extends BaseController {
     private IOrderService iOrderService;
 
     @ApiOperation("创建订单")
-    @PostMapping("create")
+    @PostMapping("/create")
     @ResponseBody
     public ServerResponse create(@RequestBody IdVo shippingId) {
         User user = getUser();
@@ -53,7 +53,7 @@ public class OrderController extends BaseController {
     }
 
     @ApiOperation("取消")
-    @PostMapping("cancel")
+    @PostMapping("/cancel")
     @ResponseBody
     public ServerResponse cancel(@RequestBody LongIdVo orderNo) {
         User user = getUser();
@@ -64,7 +64,7 @@ public class OrderController extends BaseController {
     }
 
     @ApiOperation("获取订单")
-    @GetMapping("get_order_cart_product")
+    @GetMapping("/")
     @ResponseBody
     public ServerResponse getOrderCartProduct() {
         User user = getUser();
@@ -75,7 +75,7 @@ public class OrderController extends BaseController {
     }
 
     @ApiOperation("订单详情")
-    @PostMapping("detail")
+    @PostMapping("/detail")
     @ResponseBody
     public ServerResponse detail(@RequestBody LongIdVo orderNo) {
         User user = getUser();
@@ -86,7 +86,7 @@ public class OrderController extends BaseController {
     }
 
     @ApiOperation("订单列表")
-    @PostMapping("list")
+    @PostMapping("/list")
     @ResponseBody
     public ServerResponse list(@RequestBody PageVo pageVo) {
         User user = getUser();
@@ -97,7 +97,7 @@ public class OrderController extends BaseController {
     }
 
     @ApiOperation("支付")
-    @PostMapping("pay")
+    @PostMapping("/pay")
     @ResponseBody
     public ServerResponse pay(@RequestBody LongIdVo orderNo, HttpServletRequest request) {
         User user = getUser();
@@ -109,7 +109,7 @@ public class OrderController extends BaseController {
     }
 
     @ApiOperation("支付宝回调")
-    @PostMapping("alipay_callback")
+    @PostMapping("/alipay/callback")
     @ResponseBody
     public Object alipayCallback(HttpServletRequest request) {
         Map<String, String> params = Maps.newHashMap();
@@ -153,7 +153,7 @@ public class OrderController extends BaseController {
     }
 
     @ApiOperation("查询订单状态")
-    @PostMapping("query_order_pay_status")
+    @PostMapping("/query/status")
     @ResponseBody
     public ServerResponse<Boolean> queryOrderPayStatus(@RequestBody LongIdVo orderNo) {
         User user = getUser();

@@ -47,7 +47,7 @@ public class ProductManageController extends BaseController {
     private IFileService iFileService;
 
     @ApiOperation("新增产品")
-    @PostMapping("save")
+    @PostMapping("/add")
     @ResponseBody
     public ServerResponse productSave(@RequestBody Product product) {
         User user = getUser();
@@ -64,7 +64,7 @@ public class ProductManageController extends BaseController {
     }
 
     @ApiOperation("产品上下架")
-    @PostMapping("set_sale_status")
+    @PostMapping("/status")
     @ResponseBody
     public ServerResponse setSaleStatus(@RequestBody StatusVo statusVo) {
         User user = getUser();
@@ -80,7 +80,7 @@ public class ProductManageController extends BaseController {
     }
 
     @ApiOperation("产品详情")
-    @PostMapping("detail")
+    @PostMapping("/detail")
     @ResponseBody
     public ServerResponse getDetail(@RequestBody IdVo productId) {
         User user = getUser();
@@ -98,7 +98,7 @@ public class ProductManageController extends BaseController {
     }
 
     @ApiOperation("产品列表")
-    @PostMapping("list")
+    @PostMapping("/list")
     @ResponseBody
     public ServerResponse getList(@RequestBody PageVo pageVo) {
         User user = getUser();
@@ -115,7 +115,7 @@ public class ProductManageController extends BaseController {
     }
 
     @ApiOperation("产品搜索")
-    @PostMapping("search")
+    @PostMapping("/search")
     @ResponseBody
     public ServerResponse productSearch(@RequestBody ProductSearchVo productVo) {
         User user = getUser();
@@ -132,7 +132,7 @@ public class ProductManageController extends BaseController {
     }
 
     @ApiOperation("图片上传")
-    @PostMapping("upload")
+    @PostMapping("/upload")
     @ResponseBody
     public ServerResponse upload(@RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
         User user = getUser();
@@ -154,7 +154,7 @@ public class ProductManageController extends BaseController {
     }
 
     @ApiOperation("富文本上传")
-    @PostMapping("richtext_img_upload")
+    @PostMapping("/richtext_img_upload")
     @ResponseBody
     public Map richtextImgUpload(@RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
         Map resultMap = Maps.newHashMap();

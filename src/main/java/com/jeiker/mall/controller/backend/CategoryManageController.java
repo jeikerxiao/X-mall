@@ -32,7 +32,7 @@ public class CategoryManageController extends BaseController {
     private ICategoryService iCategoryService;
 
     @ApiOperation("增加类别节点")
-    @PostMapping("add_category")
+    @PostMapping("/add")
     @ResponseBody
     public ServerResponse addCategory(@RequestBody CategoryReqVo categoryReqVo) {
         User user = getUser();
@@ -51,7 +51,7 @@ public class CategoryManageController extends BaseController {
     }
 
     @ApiOperation("修改类别名称")
-    @PostMapping("set_category_name")
+    @PostMapping("/update")
     @ResponseBody
     public ServerResponse setCategoryName(@RequestBody CategoryReqVo categoryReqVo) {
         User user = getUser();
@@ -67,7 +67,7 @@ public class CategoryManageController extends BaseController {
     }
 
     @ApiOperation("获取类别子节点")
-    @PostMapping("get_category")
+    @PostMapping("/select")
     @ResponseBody
     public ServerResponse getChildrenParallelCategory(@RequestBody IdVo categoryId) {
         User user = getUser();
@@ -83,7 +83,7 @@ public class CategoryManageController extends BaseController {
     }
 
     @ApiOperation("获取当前分类id并获取子节点")
-    @PostMapping("get_deep_category")
+    @PostMapping("/all")
     @ResponseBody
     public ServerResponse getCategoryAndDeepChildrenCategory(@RequestBody IdVo categoryId) {
         User user = getUser();
