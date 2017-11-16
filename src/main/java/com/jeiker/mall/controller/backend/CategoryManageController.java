@@ -83,7 +83,7 @@ public class CategoryManageController extends BaseController {
     }
 
     @ApiOperation("获取当前分类id并获取子节点")
-    @PostMapping("/all")
+    @PostMapping("/list")
     @ResponseBody
     public ServerResponse getCategoryAndDeepChildrenCategory(@RequestBody IdVo categoryId) {
         User user = getUser();

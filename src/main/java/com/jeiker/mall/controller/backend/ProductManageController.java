@@ -134,7 +134,7 @@ public class ProductManageController extends BaseController {
     @ApiOperation("图片上传")
     @PostMapping("/upload")
     @ResponseBody
-    public ServerResponse upload(@RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
+    public ServerResponse upload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
         User user = getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
@@ -154,9 +154,9 @@ public class ProductManageController extends BaseController {
     }
 
     @ApiOperation("富文本上传")
-    @PostMapping("/richtext_img_upload")
+    @PostMapping("/rich/upload")
     @ResponseBody
-    public Map richtextImgUpload(@RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
+    public Map richtextImgUpload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
         Map resultMap = Maps.newHashMap();
         User user = getUser();
         if (user == null) {
