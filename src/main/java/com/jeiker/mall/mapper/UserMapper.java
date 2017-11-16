@@ -3,6 +3,8 @@ package com.jeiker.mall.mapper;
 import com.jeiker.mall.model.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -33,4 +35,6 @@ public interface UserMapper {
     int checkEmailByUserId(@Param(value = "email") String email, @Param(value = "userId") Integer userId);
 
     User selectToken(@Param("username") String username);
+
+    List<User> selectAll();
 }

@@ -5,11 +5,15 @@ import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.common.TokenCache;
 import com.jeiker.mall.mapper.UserMapper;
 import com.jeiker.mall.model.User;
+import com.jeiker.mall.model.vo.UserVo;
 import com.jeiker.mall.service.IUserService;
 import com.jeiker.mall.util.MD5Util;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -221,5 +225,17 @@ public class UserServiceImpl implements IUserService {
         }
         user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
         return ServerResponse.createBySuccess("获取用户成功", user);
+    }
+
+    @Override
+    public ServerResponse<List<UserVo>> getUsers() {
+        List<User> userList = userMapper.selectAll();
+        List<UserVo> userVoList = new ArrayList<>();
+        for (User user : userList) {
+            UserVo userVo = new UserVo();
+            BeanUtils.copyProperties(user, userVo);
+            userVoList.add(userVo);
+        }
+        return ServerResponse.createBySuccess("获取用户成功", userVoList);
     }
 }

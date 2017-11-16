@@ -2,6 +2,9 @@ package com.jeiker.mall.service;
 
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
+import com.jeiker.mall.model.vo.UserVo;
+
+import java.util.List;
 
 /**
  * Created by geelyz
@@ -29,4 +32,6 @@ public interface IUserService {
     ServerResponse checkAdminRole(User user);
 
     ServerResponse<User> getUser(String token);
+
+    ServerResponse<List<UserVo>> getUsers();
 }

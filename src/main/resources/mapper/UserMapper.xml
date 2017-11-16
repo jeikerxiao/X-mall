@@ -219,4 +219,10 @@
     where username = #{username}
   </select>
 
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from mmall_user
+  </select>
+
 </mapper>

@@ -2,9 +2,11 @@ package com.jeiker.mall.controller.backend;
 
 import com.jeiker.mall.common.BaseController;
 import com.jeiker.mall.common.Const;
+import com.jeiker.mall.common.ResponseCode;
 import com.jeiker.mall.common.ServerResponse;
 import com.jeiker.mall.model.User;
 import com.jeiker.mall.model.req.LoginVo;
+import com.jeiker.mall.model.vo.UserVo;
 import com.jeiker.mall.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,12 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by geely
@@ -48,6 +48,23 @@ public class UserManageController extends BaseController {
                 return ServerResponse.createByErrorMessage("不是管理员,无法登录");
             }
         }
+        return response;
+    }
+
+    @ApiOperation("用户列表")
+    @GetMapping("/list")
+    @ResponseBody
+    public ServerResponse<List<UserVo>> list() {
+        User user = getUser();
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
+
+        }
+        if (user.getRole() != Const.Role.ROLE_ADMIN) {
+            //说明登录的不是管理员
+            return ServerResponse.createByErrorMessage("不是管理员,无法登录");
+        }
+        ServerResponse<List<UserVo>> response = iUserService.getUsers();
         return response;
     }
 
